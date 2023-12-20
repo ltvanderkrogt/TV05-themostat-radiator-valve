@@ -9,7 +9,7 @@ The smart thermostats that are currently popular do not have the option to switc
 Together with some automation in Home Assistant, each thermostat switches on the heating system when there is a heat demand. Because the heat demand bridge is connected in parallel to the existing thermostat, a fallback in the event of Home Assistant failure is arranged.
 
 Thermostat TV05 
-
+<img src="https://user-images.githubusercontent.com/22962761/227800415-23c39647-59c9-4e5a-aeb2-49695b94c130.png" width=50% height=50%>
 Automation architecture 
 
 The heat demand bridge 

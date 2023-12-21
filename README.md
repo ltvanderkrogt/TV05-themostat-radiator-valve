@@ -12,6 +12,8 @@ Thermostat TV05 Zigbee gateway via Tuya(SmartLife)<BR>
 <img src="https://github.com/ltvanderkrogt/TV05-themostat-radiator-valve/blob/c7f54a1b874992f7f603850454003c33be9d03da/img/TV05%20set.png" width=50% height=50%><BR>
 <BR>
 Automation architecture <BR>
+
+<img src="https://github.com/ltvanderkrogt/TV05-themostat-radiator-valve/blob/f431a33d6fe4b762c81e91892cad0b628bcf2a17/img/Pelikaan.png" width=90% height=90%><BR>
 <BR>
 The heat demand bridge <BR>
 <img src="https://github.com/ltvanderkrogt/TV05-themostat-radiator-valve/blob/main/img/Relay%20module%20ESP8266.png" width=25% height=25%><BR>

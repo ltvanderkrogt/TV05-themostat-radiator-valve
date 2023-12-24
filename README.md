@@ -1,4 +1,4 @@
-# TV05-themostat-radiator-valve
+# TV05 themostat radiator valve & heat demand bridge
 Integrate the smart thermostats TV05 into your heating installation.
 
 *** under construction ***

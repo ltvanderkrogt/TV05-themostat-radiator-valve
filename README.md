@@ -11,6 +11,16 @@ Together with some automation in Home Assistant, each thermostat switches on the
 Thermostat TV05 Zigbee gateway via Tuya(SmartLife)<BR>
 <img src="https://github.com/ltvanderkrogt/TV05-themostat-radiator-valve/blob/c7f54a1b874992f7f603850454003c33be9d03da/img/TV05%20set.png" width=50% height=50%><BR>
 <BR>
+Reset thermstat  <BR>
+<img src="https://github.com/ltvanderkrogt/TV05-themostat-radiator-valve/blob/1f28e88d8415bf406c4c3055466fb719f4e4e0e6/img/Reset.jpeg" width=50% height=50%><BR>
+Beware: reset only works if display is on! <BR>
+<BR> 
+
+Error codes <BR> 
+<img src="https://github.com/ltvanderkrogt/TV05-themostat-radiator-valve/blob/1f28e88d8415bf406c4c3055466fb719f4e4e0e6/img/Error_Codes.jpeg" width=50% height=50%><BR>
+<BR> 
+
+
 Automation architecture <BR>
 
 <img src="https://github.com/ltvanderkrogt/TV05-themostat-radiator-valve/blob/f431a33d6fe4b762c81e91892cad0b628bcf2a17/img/Pelikaan.png" width=90% height=90%><BR>
@@ -242,4 +252,8 @@ sequence:
 mode: single
 ```
 
+Issues<BR> 
+Holiday temperature: periode must be set! I set the periode to 10 years. <BR>
+Reset at the knob only works if display is on! <BR> 
+Don't forget to change the default schedule. <BR> 
 

@@ -137,6 +137,7 @@ Turns ON the heat demand bridge switch
 <BR> 
 Cut&Paste this script in a new script with the yaml editor
 <BR> 
+
 ```yaml
 alias: Warmtevraag V3
 sequence:

@@ -94,39 +94,26 @@ If the condition is false:
 Sends a notification to a mobile app stating that the thermostat does not have a warmth demand. It includes information about the current and target temperatures.
 Enabled:
 
-The enabled: false statement indicates that this automation is currently disabled. If you want it to be active, you can set enabled: true.<BR>
+The enabled: false statement indicates that this automation is currently disabled. If you want it to be active, you can set enabled: true.<BR> 
+<BR> 
+Cut&Paste this script in a new automation with the yaml editor<BR> 
 ```yaml
-alias: Thermostaat hal temp verandering
-description: Thermostaat hal temp verandering
+alias: Warmtevraag thermostaten - Trigger
+description: Warmtevraag thermostaten - Trigger
 trigger:
   - platform: state
     entity_id:
       - climate.hal
-condition: []
+      - climate.vincent
+      - climate.thermostaat_voorkamer
+      - climate.thermostaat_keuken
+      - climate.julia
+      - climate.logeer
+      - climate.werkkamer
+      - climate.pelikaan_slaapkamer_boven_none
 action:
-  - service: script.1702503879842
+  - service: script.1704921864856
     data: {}
-  - if:
-      - condition: template
-        value_template: >-
-          {{ state_attr('climate.hal', 'current_temperature') <
-          state_attr('climate.hal', 'temperature') }}
-    then:
-      - service: notify.mobile_app_iphone_rwn1w3gf6k
-        data:
-          message: >-
-            Thermostaat hal warmtevraag aan. Nu 
-            {{state_attr('climate.hal','current_temperature') }} ºC ingesteld op
-            {{    state_attr('climate.hal','temperature')}} ºC.
-    else:
-      - service: notify.mobile_app_iphone_rwn1w3gf6k
-        data:
-          message: >-
-            Thermostaat hal warmtevraag uit. Nu 
-            {{state_attr('climate.hal','current_temperature') }} ºC ingesteld op
-            {{    state_attr('climate.hal','temperature')}} ºC.
-    enabled: false
-mode: single
 ```
 
 Script heat demand <BR>
@@ -147,8 +134,11 @@ Sequence:
 For test only: Sends a notification to a mobile app, stating the number of thermostats that have a warmth demand. The count is based on the number of thermostats with the current temperature less than the target temperature.
 Turns ON the heat demand bridge switch
 
+<BR> 
+Cut&Paste this script in a new script with the yaml editor
+<BR> 
 ```yaml
-alias: Warmtevraag
+alias: Warmtevraag V3
 sequence:
   - choose:
       - conditions:
@@ -160,34 +150,43 @@ sequence:
                   state_attr('climate.hal', 'temperature') }}
               - condition: template
                 value_template: >-
-                  {{ state_attr('climate.vincent', 'current_temperature') >=
-                  state_attr('climate.vincent', 'temperature') }}
-              - condition: template
-                value_template: >-
-                  {{ state_attr('climate.thermostaat_voorkamer',
-                  'current_temperature') >=
-                  state_attr('climate.thermostaat_voorkamer', 'temperature') }}
-              - condition: template
-                value_template: >-
                   {{ state_attr('climate.julia', 'current_temperature') >=
                   state_attr('climate.julia', 'temperature') }}
               - condition: template
                 value_template: >-
-                  {{ state_attr('climate.werkkamer', 'current_temperature') >=
-                  state_attr('climate.werkkamer', 'temperature') }}
-              - condition: template
-                value_template: >-
-                  {{ state_attr('climate.thermostaat_haardkamer',
-                  'current_temperature') >=
-                  state_attr('climate.thermostaat_haardkamer', 'temperature') }}
+                  {{ state_attr('climate.vincent', 'current_temperature') >=
+                  state_attr('climate.vincent', 'temperature') }}
               - condition: template
                 value_template: >-
                   {{ state_attr('climate.logeer', 'current_temperature') >=
-                  state_attr('climate.logeer', 'temperature') }}
+                  state_attr('climate.logeer', 'temperature') }}      
+              - condition: template
+                value_template: >-
+                  {{ state_attr('climate.werkkamer', 'current_temperature') >=
+                  state_attr('climate.werkkamer', 'temperature')
+                  }}                        
+              - condition: template
+                value_template: >-
+                  {{ state_attr('climate.thermostaat_voorkamer',
+                  'current_temperature') >=
+                  state_attr('climate.thermostaat_voorkamer', 'temperature')
+                  }}         
+              - condition: template
+                value_template: >-
+                  {{ state_attr('climate.thermostaat_keuken',
+                  'current_temperature') >=
+                  state_attr('climate.thermostaat_keuken', 'temperature') }}  
+              - condition: template
+                value_template: >-
+                  {{ state_attr('climate.pelikaan_slaapkamer_boven_none',
+                  'current_temperature') >=
+                  state_attr('climate.pelikaan_slaapkamer_boven_none',
+                  'temperature') }}                    
         sequence:
-          - service: notify.mobile_app_iphone_rwn1w3gf6k
-            data:
-              message: Thermostaten hebben geen warmtevraag.
+          - type: turn_off
+            device_id: be319c0f01549bcd36540820b476d9f7
+            entity_id: 97f7d5ec8726146ec8fba483d375b749
+            domain: light
             enabled: false
           - type: turn_off
             device_id: 35f12613a862ddb2f36de40e6771fdd1
@@ -199,56 +198,104 @@ sequence:
               - condition: template
                 value_template: >-
                   {{ state_attr('climate.hal', 'current_temperature') <
-                  state_attr('climate.hal', 'temperature') }}
+                  (state_attr('climate.hal', 'temperature') - 0.5) }}
+              - condition: template
+                value_template: >-
+                  {{ state_attr('climate.julia', 'current_temperature') <
+                  (state_attr('climate.julia', 'temperature') - 0.5) }}
               - condition: template
                 value_template: >-
                   {{ state_attr('climate.vincent', 'current_temperature') <
-                  state_attr('climate.vincent', 'temperature') }}
+                  (state_attr('climate.vincent', 'temperature') - 0.5)
+                  }}        
+              - condition: template
+                value_template: >-
+                  {{ state_attr('climate.logeer', 'current_temperature') <
+                  (state_attr('climate.logeer', 'temperature') - 0.5)
+                  }}                 
+              - condition: template
+                value_template: >-
+                  {{ state_attr('climate.werkkamer', 'current_temperature') <
+                  (state_attr('climate.werkkamer', 'temperature') - 0.5)
+                  }}                                   
               - condition: template
                 value_template: >-
                   {{ state_attr('climate.thermostaat_voorkamer',
                   'current_temperature') <
-                  state_attr('climate.thermostaat_voorkamer', 'temperature') }}
+                  (state_attr('climate.thermostaat_voorkamer', 'temperature') -
+                  0.5) }}   
               - condition: template
                 value_template: >-
-                  {{ state_attr('climate.thermostaat_haardkamer',
+                  {{ state_attr('climate.thermostaat_keuken',
                   'current_temperature') <
-                  state_attr('climate.thermostaat_haardkamer', 'temperature') }}
+                  (state_attr('climate.thermostaat_keuken', 'temperature') -
+                  0.5) }}  
               - condition: template
                 value_template: >-
-                  {{ state_attr('climate.julia', 'current_temperature') <
-                  state_attr('climate.julia', 'temperature') }}
-              - condition: template
-                value_template: >-
-                  {{ state_attr('climate.werkkamer', 'current_temperature') <
-                  state_attr('climate.werkkamer', 'temperature') }}
-              - condition: template
-                value_template: >-
-                  {{ state_attr('climate.logeer', 'current_temperature') <
-                  state_attr('climate.logeer', 'temperature') }}
+                  {{ state_attr('climate.pelikaan_slaapkamer_boven_none',
+                  'current_temperature') <
+                  (state_attr('climate.pelikaan_slaapkamer_boven_none',
+                  'temperature') - 0.5) }}                    
         sequence:
-          - service: notify.mobile_app_iphone_rwn1w3gf6k
-            data:
-              message: >
-                {%- set active_thermostats = namespace(count=0) -%} {%- for
-                entity_id in [
-                  'climate.hal', 'climate.vincent', 'climate.thermostaat_voorkamer',
-                  'climate.thermostaat_haardkamer', 'climate.julia', 'climate.logeer', 'climate.werkkamer'
-                ] -%}
-                  {%- set current_temp = state_attr(entity_id, 'current_temperature') -%}
-                  {%- set target_temp = state_attr(entity_id, 'temperature') -%}
-                  {%- set thermostat_status = 'ON' if current_temp < target_temp else 'OFF' -%}
-                  {%- if thermostat_status == 'ON' -%}
-                    {%- set active_thermostats.count = active_thermostats.count + 1 -%}
-                  {%- endif -%}
-
-                {%- endfor -%} Ten minste {{ active_thermostats.count }}
-                thermostaten hebben warmtevraag.
+          - type: turn_on
+            device_id: be319c0f01549bcd36540820b476d9f7
+            entity_id: 97f7d5ec8726146ec8fba483d375b749
+            domain: light
             enabled: false
           - type: turn_on
             device_id: 35f12613a862ddb2f36de40e6771fdd1
             entity_id: af4924c232cc8f702d298610b3a05315
             domain: switch
+          - type: turn_on
+            device_id: 4def715fe61ce4b3f34245cc03af54ae
+            entity_id: def13460ab8a7f3c861ed1c70ba8be49
+            domain: switch
+  - if:
+      - condition: template
+        value_template: |2-
+             {{ state_attr('climate.thermostaat_voorkamer',
+                            'current_temperature') <
+                            state_attr('climate.thermostaat_voorkamer', 'temperature') }}
+    then:
+      - type: turn_on
+        device_id: 28fa5a1751d642bed33898428fc3ea86
+        entity_id: 0ab5bfb4f3b8a4699c2401ac7730c103
+        domain: switch
+    else:
+      - delay:
+          hours: 0
+          minutes: 5
+          seconds: 0
+          milliseconds: 0
+        enabled: false
+      - type: turn_off
+        device_id: 28fa5a1751d642bed33898428fc3ea86
+        entity_id: 0ab5bfb4f3b8a4699c2401ac7730c103
+        domain: switch
+  - if:
+      - condition: template
+        value_template: |2-
+             {{ state_attr('climate.thermostaat_keuken',
+                            'current_temperature') <
+                            (state_attr('climate.thermostaat_keuken', 'temperature') -
+                            0.5) }}
+    then:
+      - type: turn_on
+        device_id: d650ce16cd8c48748fef09c6b19b2381
+        entity_id: 6f3531d5df687e5493596a2eda84bb36
+        domain: switch
+    else:
+      - delay:
+          hours: 0
+          minutes: 5
+          seconds: 0
+          milliseconds: 0
+        enabled: false
+      - type: turn_off
+        device_id: d650ce16cd8c48748fef09c6b19b2381
+        entity_id: 6f3531d5df687e5493596a2eda84bb36
+        domain: switch
+        enabled: false
 mode: single
 ```
 

@@ -1,0 +1,159 @@
+alias: Warmtevraag V3
+sequence:
+  - choose:
+      - conditions:
+          - condition: and
+            conditions:
+              - condition: template
+                value_template: >-
+                  {{ state_attr('climate.hal', 'current_temperature') >=
+                  state_attr('climate.hal', 'temperature') }}
+              - condition: template
+                value_template: >-
+                  {{ state_attr('climate.julia', 'current_temperature') >=
+                  state_attr('climate.julia', 'temperature') }}
+              - condition: template
+                value_template: >-
+                  {{ state_attr('climate.vincent', 'current_temperature') >=
+                  state_attr('climate.vincent', 'temperature') }}
+              - condition: template
+                value_template: >-
+                  {{ state_attr('climate.logeer', 'current_temperature') >=
+                  state_attr('climate.logeer', 'temperature') }}      
+              - condition: template
+                value_template: >-
+                  {{ state_attr('climate.werkkamer', 'current_temperature') >=
+                  state_attr('climate.werkkamer', 'temperature')
+                  }}                        
+              - condition: template
+                value_template: >-
+                  {{ state_attr('climate.thermostaat_voorkamer',
+                  'current_temperature') >=
+                  state_attr('climate.thermostaat_voorkamer', 'temperature')
+                  }}         
+              - condition: template
+                value_template: >-
+                  {{ state_attr('climate.thermostaat_keuken',
+                  'current_temperature') >=
+                  state_attr('climate.thermostaat_keuken', 'temperature') }}  
+              - condition: template
+                value_template: >-
+                  {{ state_attr('climate.pelikaan_slaapkamer_boven_none',
+                  'current_temperature') >=
+                  state_attr('climate.pelikaan_slaapkamer_boven_none',
+                  'temperature') }}                    
+        sequence:
+          - type: turn_off
+            device_id: be319c0f01549bcd36540820b476d9f7
+            entity_id: 97f7d5ec8726146ec8fba483d375b749
+            domain: light
+            enabled: false
+          - type: turn_off
+            device_id: 35f12613a862ddb2f36de40e6771fdd1
+            entity_id: af4924c232cc8f702d298610b3a05315
+            domain: switch
+      - conditions:
+          - condition: or
+            conditions:
+              - condition: template
+                value_template: >-
+                  {{ state_attr('climate.hal', 'current_temperature') <
+                  (state_attr('climate.hal', 'temperature') - 0.5) }}
+              - condition: template
+                value_template: >-
+                  {{ state_attr('climate.julia', 'current_temperature') <
+                  (state_attr('climate.julia', 'temperature') - 0.5) }}
+              - condition: template
+                value_template: >-
+                  {{ state_attr('climate.vincent', 'current_temperature') <
+                  (state_attr('climate.vincent', 'temperature') - 0.5)
+                  }}        
+              - condition: template
+                value_template: >-
+                  {{ state_attr('climate.logeer', 'current_temperature') <
+                  (state_attr('climate.logeer', 'temperature') - 0.5)
+                  }}                 
+              - condition: template
+                value_template: >-
+                  {{ state_attr('climate.werkkamer', 'current_temperature') <
+                  (state_attr('climate.werkkamer', 'temperature') - 0.5)
+                  }}                                   
+              - condition: template
+                value_template: >-
+                  {{ state_attr('climate.thermostaat_voorkamer',
+                  'current_temperature') <
+                  (state_attr('climate.thermostaat_voorkamer', 'temperature') -
+                  0.5) }}   
+              - condition: template
+                value_template: >-
+                  {{ state_attr('climate.thermostaat_keuken',
+                  'current_temperature') <
+                  (state_attr('climate.thermostaat_keuken', 'temperature') -
+                  0.5) }}  
+              - condition: template
+                value_template: >-
+                  {{ state_attr('climate.pelikaan_slaapkamer_boven_none',
+                  'current_temperature') <
+                  (state_attr('climate.pelikaan_slaapkamer_boven_none',
+                  'temperature') - 0.5) }}                    
+        sequence:
+          - type: turn_on
+            device_id: be319c0f01549bcd36540820b476d9f7
+            entity_id: 97f7d5ec8726146ec8fba483d375b749
+            domain: light
+            enabled: false
+          - type: turn_on
+            device_id: 35f12613a862ddb2f36de40e6771fdd1
+            entity_id: af4924c232cc8f702d298610b3a05315
+            domain: switch
+          - type: turn_on
+            device_id: 4def715fe61ce4b3f34245cc03af54ae
+            entity_id: def13460ab8a7f3c861ed1c70ba8be49
+            domain: switch
+  - if:
+      - condition: template
+        value_template: |2-
+             {{ state_attr('climate.thermostaat_voorkamer',
+                            'current_temperature') <
+                            state_attr('climate.thermostaat_voorkamer', 'temperature') }}
+    then:
+      - type: turn_on
+        device_id: 28fa5a1751d642bed33898428fc3ea86
+        entity_id: 0ab5bfb4f3b8a4699c2401ac7730c103
+        domain: switch
+    else:
+      - delay:
+          hours: 0
+          minutes: 5
+          seconds: 0
+          milliseconds: 0
+        enabled: false
+      - type: turn_off
+        device_id: 28fa5a1751d642bed33898428fc3ea86
+        entity_id: 0ab5bfb4f3b8a4699c2401ac7730c103
+        domain: switch
+  - if:
+      - condition: template
+        value_template: |2-
+             {{ state_attr('climate.thermostaat_keuken',
+                            'current_temperature') <
+                            (state_attr('climate.thermostaat_keuken', 'temperature') -
+                            0.5) }}
+    then:
+      - type: turn_on
+        device_id: d650ce16cd8c48748fef09c6b19b2381
+        entity_id: 6f3531d5df687e5493596a2eda84bb36
+        domain: switch
+    else:
+      - delay:
+          hours: 0
+          minutes: 5
+          seconds: 0
+          milliseconds: 0
+        enabled: false
+      - type: turn_off
+        device_id: d650ce16cd8c48748fef09c6b19b2381
+        entity_id: 6f3531d5df687e5493596a2eda84bb36
+        domain: switch
+        enabled: false
+mode: single

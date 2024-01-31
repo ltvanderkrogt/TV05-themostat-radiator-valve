@@ -1,0 +1,16 @@
+alias: Warmtevraag thermostaten - Trigger
+description: Warmtevraag thermostaten - Trigger
+trigger:
+  - platform: state
+    entity_id:
+      - climate.hal
+      - climate.vincent
+      - climate.thermostaat_voorkamer
+      - climate.thermostaat_keuken
+      - climate.julia
+      - climate.logeer
+      - climate.werkkamer
+      - climate.pelikaan_slaapkamer_boven_none
+action:
+  - service: script.1704921864856
+    data: {}

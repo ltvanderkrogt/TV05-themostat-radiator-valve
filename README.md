@@ -23,7 +23,7 @@ Error codes <BR>
 
 Automation architecture <BR>
 
-<img src="https://github.com/ltvanderkrogt/TV05-themostat-radiator-valve/blob/f431a33d6fe4b762c81e91892cad0b628bcf2a17/img/Pelikaan.png" width=90% height=90%><BR>
+<img src="Pelikaan.png" width=90% height=90%><BR>
 <BR>
 The heat demand bridge <BR>
 <img src="https://github.com/ltvanderkrogt/TV05-themostat-radiator-valve/blob/main/img/Relay%20module%20ESP8266.png" width=25% height=25%><BR>
